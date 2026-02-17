@@ -38,6 +38,11 @@ Este projeto terá as seguintes funcionalidades:
 
 **Funcionalidades do Administrador (Painel Privado):**
 
+![Pagina Admin](assets/img/Screenshot%202026-02-17%20at%2019.56.42.pngpagina.png)
+![Pagina Admin](assets/img/Screenshot%202026-02-17%20at%2019.56.15.png)
+![Pagina Admin](assets/img/Screenshot%202026-02-17%20at%2020.06.46.png)
+![Pagina Admin](assets/img/Screenshot%202026-02-17%20at%2019.59.05.png)
+
 - **CRUD completo** para gerenciamento dos pets:
     - **Create:** Cadastrar novos pets com nome, idade, localização, tipo, descrição e imagem
     - **Read:** Visualizar todos os pets cadastrados em formato de cards
@@ -99,17 +104,13 @@ Os protótipos das páginas foram elaborados e podem ser encontrados nos seguint
 - Grid de cards com todos os pets cadastrados
 - Cada card contém imagem, informações e botões "Editar" e "Excluir"
 
-**Design System:**
+**Acessando o prototipo:**
 
-- **Cores principais:**
-    - Primária: #ff6b6b (vermelho suave)
-    - Secundária: #4ecdc4 (verde água)
-    - Fundo: #0f172a (azul escuro)
-    - Cards: #1e293b (azul médio)
-- **Tipografia:** Fonte Archivo do Google Fonts
-- **Componentes:** Cards com sombreamento e hover effects, botões estilizados, modal centralizado
-
-Os protótipos podem ser visualizados acessando o projeto em execução ou através dos arquivos HTML na pasta `public/`.
+- Clonar o repositorio do projeto
+- Baixar as dependencias
+- npm run dev
+- Em seguida o servidor estara rodando em http://localhost:3000
+- Painel Admin: http://localhost:3000/admin
 
 ---
 
@@ -136,64 +137,3 @@ Os protótipos podem ser visualizados acessando o projeto em execução ou atrav
 **[10]** DUCKETT, J. **HTML and CSS: Design and Build Websites**. Indianapolis: John Wiley & Sons, 2021.
 
 ---
-
-# CSI606-2024-02 - Remoto - Trabalho Final - Resultados
-
-## PetLandia - Sistema de Gerenciamento de Adoção e Resgate de Pets
-
----
-
-**Discente:** Princesa Leia (Luke Skywalker)  
-**Data:** 15 de Fevereiro de 2026  
-**Orientador:** [Nome do Professor]
-
----
-
-### Resumo
-
-O PetLandia foi desenvolvido como uma solução completa para gerenciamento de adoção e resgate de pets. O sistema permite que administradores cadastrem, editem e excluam animais, enquanto os usuários podem visualizar os pets disponíveis organizados em categorias. O projeto utiliza Node.js e Express no backend, com armazenamento em JSON, e frontend em HTML, CSS e JavaScript puro. Durante o desenvolvimento, foram implementadas todas as funcionalidades CRUD previstas, além de recursos como upload de imagens, grid responsivo e design atrativo. O resultado é uma plataforma funcional, de fácil utilização e pronta para ser expandida com novas funcionalidades futuramente.
-
-**Palavras-chave:** Adoção de pets, CRUD, Node.js, Express, Sistemas Web
-
----
-
-### 1. Funcionalidades Implementadas
-
-| Categoria    | Funcionalidade                                         | Status       |
-| ------------ | ------------------------------------------------------ | ------------ |
-| **Backend**  | API RESTful com endpoints GET, POST, PUT, DELETE       | ✅ Concluído |
-| **Backend**  | Upload de imagens com Multer                           | ✅ Concluído |
-| **Backend**  | Armazenamento persistente em arquivo JSON              | ✅ Concluído |
-| **Backend**  | Configuração de CORS para requisições                  | ✅ Concluído |
-| **Frontend** | Página inicial com layout responsivo                   | ✅ Concluído |
-| **Frontend** | Hero section com apresentação da PetLandia             | ✅ Concluído |
-| **Frontend** | Seção de adoção com grid dinâmico                      | ✅ Concluído |
-| **Frontend** | Seção de destaques com grid dinâmico                   | ✅ Concluído |
-| **Frontend** | Modal de informações de contato                        | ✅ Concluído |
-| **Admin**    | Painel administrativo exclusivo                        | ✅ Concluído |
-| **Admin**    | Listagem de todos os pets em cards                     | ✅ Concluído |
-| **Admin**    | Formulário de cadastro de novos pets                   | ✅ Concluído |
-| **Admin**    | Edição de pets existentes                              | ✅ Concluído |
-| **Admin**    | Exclusão de pets com confirmação                       | ✅ Concluído |
-| **Admin**    | Upload de imagens no cadastro/edição                   | ✅ Concluído |
-| **Admin**    | Classificação por tipo (perdido/encontrado/abandonado) | ✅ Concluído |
-| **Admin**    | Marcação de pets como destaque                         | ✅ Concluído |
-| **Design**   | Grid responsivo com auto-fit/minmax                    | ✅ Concluído |
-| **Design**   | Cards padronizados com hover effects                   | ✅ Concluído |
-| **Design**   | Modal responsivo para formulários                      | ✅ Concluído |
-
----
-
-### 2. Funcionalidades Previstas e Não Implementadas
-
-| Funcionalidade                | Motivo da não implementação                                                               |
-| ----------------------------- | ----------------------------------------------------------------------------------------- |
-| **Autenticação de usuários**  | Optou-se por focar nas funcionalidades CRUD, deixando a autenticação para uma fase futura |
-| **Banco de dados relacional** | O uso de JSON simplificou o desenvolvimento e é suficiente para o escopo proposto         |
-| **Página de detalhes do pet** | As informações foram resumidas nos cards para manter a interface limpa                    |
-| **Múltiplas imagens por pet** | A complexidade adicional não era necessária para o MVP                                    |
-| **Busca e filtros avançados** | A separação por tipo atende ao objetivo principal do sistema                              |
-| **Sistema de notificações**   | Demandaria integração com serviços externos de e-mail/SMS                                 |
-| **Geolocalização**            | Requer integração com APIs de mapas e maior complexidade                                  |
-| **Login para ONGs parceiras** | Funcionalidade prevista para versão 2.0                                                   |
-# projetoWEB1
