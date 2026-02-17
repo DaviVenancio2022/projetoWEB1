@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Painel Admin - PetLandia</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: "Poppins", Arial, sans-serif;
+				background-color: #f5f5f5;
+			}
+
+			.admin-container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 40px 20px;
+			}
+
+			.admin-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 30px;
+				background: white;
+				padding: 20px;
+				border-radius: 10px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.admin-header h1 {
+				color: #333;
+				font-size: 24px;
+			}
+
+			.admin-header h1 span {
+				color: #ff6b6b;
+			}
+
+			.btn-novo {
+				background: #4ecdc4;
+				color: white;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+				font-weight: 600;
+				transition: background 0.3s;
+			}
+
+			.btn-novo:hover {
+				background: #45b8b0;
+			}
+
+			/* Modal do Formulário */
+			.modal {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index: 1000;
+			}
+
+			.modal-content {
+				background-color: white;
+				margin: 50px auto;
+				padding: 30px;
+				width: 90%;
+				max-width: 600px;
+				border-radius: 10px;
+				max-height: 90vh;
+				overflow-y: auto;
+				position: relative;
+			}
+
+			.fechar {
+				position: absolute;
+				right: 20px;
+				top: 15px;
+				font-size: 28px;
+				font-weight: bold;
+				color: #666;
+				cursor: pointer;
+			}
+
+			.fechar:hover {
+				color: #ff6b6b;
+			}
+
+			.modal h2 {
+				color: #333;
+				margin-bottom: 20px;
+				padding-bottom: 10px;
+				border-bottom: 2px solid #4ecdc4;
+			}
+
+			/* Formulário */
+			.form-group {
+				margin-bottom: 20px;
+			}
+
+			.form-group label {
+				display: block;
+				margin-bottom: 5px;
+				color: #555;
+				font-weight: 500;
+			}
+
+			.form-group input,
+			.form-group select,
+			.form-group textarea {
+				width: 100%;
+				padding: 10px;
+				border: 1px solid #ddd;
+				border-radius: 5px;
+				font-size: 14px;
+			}
+
+			.form-group input:focus,
+			.form-group select:focus,
+			.form-group textarea:focus {
+				outline: none;
+				border-color: #4ecdc4;
+			}
+
+			.form-row {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 15px;
+			}
+
+			.btn-salvar {
+				background: #4ecdc4;
+				color: white;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+				font-weight: 600;
+				margin-right: 10px;
+			}
+
+			.btn-cancelar {
+				background: #ff6b6b;
+				color: white;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+				font-weight: 600;
+			}
+
+			/* Lista de Pets */
+			.pets-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 20px;
+			}
+
+			.pet-card {
+				background: white;
+				border-radius: 10px;
+				overflow: hidden;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s;
+			}
+
+			.pet-card:hover {
+				transform: translateY(-5px);
+			}
+
+			.pet-card img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+			}
+
+			.pet-info {
+				padding: 15px;
+			}
+
+			.pet-info h3 {
+				color: #333;
+				margin-bottom: 10px;
+				font-size: 18px;
+			}
+
+			.pet-info p {
+				color: #666;
+				margin: 5px 0;
+				font-size: 14px;
+			}
+
+			.pet-tipo {
+				display: inline-block;
+				padding: 4px 8px;
+				border-radius: 3px;
+				font-size: 12px;
+				font-weight: 600;
+				margin-top: 10px;
+			}
+
+			.tipo-perdido {
+				background: #ffd93d;
+				color: #333;
+			}
+
+			.tipo-encontrado {
+				background: #6c5ce7;
+				color: white;
+			}
+
+			.tipo-abandonado {
+				background: #ff6b6b;
+				color: white;
+			}
+
+			.pet-actions {
+				display: flex;
+				gap: 10px;
+				padding: 15px;
+				border-top: 1px solid #eee;
+			}
+
+			.btn-editar {
+				background: #4ecdc4;
+				color: white;
+				padding: 8px 16px;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				font-size: 14px;
+				flex: 1;
+			}
+
+			.btn-excluir {
+				background: #ff6b6b;
+				color: white;
+				padding: 8px 16px;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				font-size: 14px;
+				flex: 1;
+			}
+
+			.destaque-badge {
+				background: gold;
+				color: #333;
+				padding: 2px 6px;
+				border-radius: 3px;
+				font-size: 11px;
+				font-weight: 600;
+				margin-left: 5px;
+			}
+
+			.loading {
+				text-align: center;
+				padding: 50px;
+				color: #666;
+			}
+
+			.sem-pets {
+				text-align: center;
+				padding: 50px;
+				color: #666;
+				grid-column: 1 / -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="admin-container">
+			<div class="admin-header">
+				<h1><span>Pet</span>Landia - Painel Administrativo</h1>
+				<button class="btn-novo" onclick="abrirModalNovo()">+ Novo Pet</button>
+			</div>
+
+			<!-- Modal do Formulário -->
+			<div id="modal" class="modal">
+				<div class="modal-content">
+					<span class="fechar" onclick="fecharModal()">&times;</span>
+					<h2 id="modalTitulo">Novo Pet</h2>
+
+					<form id="petForm" enctype="multipart/form-data">
+						<input type="hidden" id="petId" />
+
+						<div class="form-row">
+							<div class="form-group">
+								<label for="nome">Nome do Pet:</label>
+								<input type="text" id="nome" required />
+							</div>
+
+							<div class="form-group">
+								<label for="idade">Idade:</label>
+								<input type="text" id="idade" required placeholder="Ex: 3 Meses" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="localizacao">Localização:</label>
+							<input
+								type="text"
+								id="localizacao"
+								required
+								placeholder="Ex: Sion, JOÃO MONLEVADE, MG"
+							/>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group">
+								<label for="tipo">Tipo:</label>
+								<select id="tipo" required>
+									<option value="perdido">Perdido</option>
+									<option value="encontrado">Encontrado</option>
+									<option value="abandonado">Abandonado</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="destaque">Destaque:</label>
+								<select id="destaque">
+									<option value="false">Não</option>
+									<option value="true">Sim</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="descricao">Descrição:</label>
+							<textarea id="descricao" rows="3" required></textarea>
+						</div>
+
+						<div class="form-group">
+							<label for="imagem">Imagem do Pet:</label>
+							<input type="file" id="imagem" accept="image/*" />
+							<small style="color: #666"
+								>Deixe em branco para manter a imagem atual</small
+							>
+						</div>
+
+						<div class="form-group">
+							<label for="imagem_url">Ou URL da Imagem:</label>
+							<input type="url" id="imagem_url" placeholder="https://..." />
+						</div>
+
+						<div>
+							<button type="submit" class="btn-salvar">Salvar</button>
+							<button type="button" class="btn-cancelar" onclick="fecharModal()">
+								Cancelar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Lista de Pets -->
+			<div id="petsList" class="pets-grid">
+				<div class="loading">Carregando pets...</div>
+			</div>
+		</div>
+
+		<script>
+			const API_URL = "/api/pets";
+
+			// Abrir modal para novo pet
+			function abrirModalNovo() {
+				document.getElementById("modalTitulo").textContent = "Novo Pet";
+				document.getElementById("petForm").reset();
+				document.getElementById("petId").value = "";
+				document.getElementById("modal").style.display = "block";
+			}
+
+			// Fechar modal
+			function fecharModal() {
+				document.getElementById("modal").style.display = "none";
+			}
+
+			// Fechar modal se clicar fora dele
+			window.onclick = function (event) {
+				const modal = document.getElementById("modal");
+				if (event.target == modal) {
+					fecharModal();
+				}
+			};
+
+			// Carregar pets ao iniciar
+			document.addEventListener("DOMContentLoaded", carregarPets);
+
+			// Configurar formulário
+			document.getElementById("petForm").addEventListener("submit", async (e) => {
+				e.preventDefault();
+
+				const formData = new FormData();
+				const id = document.getElementById("petId").value;
+
+				formData.append("nome", document.getElementById("nome").value);
+				formData.append("idade", document.getElementById("idade").value);
+				formData.append("localizacao", document.getElementById("localizacao").value);
+				formData.append("tipo", document.getElementById("tipo").value);
+				formData.append("destaque", document.getElementById("destaque").value);
+				formData.append("descricao", document.getElementById("descricao").value);
+
+				const imagemFile = document.getElementById("imagem").files[0];
+				if (imagemFile) {
+					formData.append("imagem", imagemFile);
+				}
+
+				const imagemUrl = document.getElementById("imagem_url").value;
+				if (imagemUrl) {
+					formData.append("imagem_url", imagemUrl);
+				}
+
+				try {
+					let response;
+					if (id) {
+						// Atualizar
+						response = await fetch(`${API_URL}/${id}`, {
+							method: "PUT",
+							body: formData,
+						});
+					} else {
+						// Criar novo
+						response = await fetch(API_URL, {
+							method: "POST",
+							body: formData,
+						});
+					}
+
+					if (response.ok) {
+						alert(id ? "Pet atualizado com sucesso!" : "Pet criado com sucesso!");
+						fecharModal();
+						carregarPets();
+					} else {
+						const erro = await response.json();
+						alert("Erro: " + (erro.erro || "Erro ao salvar pet"));
+					}
+				} catch (error) {
+					console.error("Erro:", error);
+					alert("Erro ao conectar com o servidor");
+				}
+			});
+
+			async function carregarPets() {
+				try {
+					const response = await fetch(API_URL);
+					const pets = await response.json();
+
+					const container = document.getElementById("petsList");
+
+					if (pets.length === 0) {
+						container.innerHTML =
+							'<div class="sem-pets">Nenhum pet cadastrado ainda. Clique em "Novo Pet" para começar!</div>';
+						return;
+					}
+
+					container.innerHTML = "";
+
+					pets.forEach((pet) => {
+						const card = document.createElement("div");
+						card.className = "pet-card";
+
+						const tipoClass = `tipo-${pet.tipo}`;
+
+						card.innerHTML = `
+                        <img src="${pet.imagem}" alt="${pet.nome}" onerror="this.src='/assets/img/default-pet.jpg'">
+                        <div class="pet-info">
+                            <h3>
+                                ${pet.nome}
+                                ${pet.destaque ? '<span class="destaque-badge">⭐ DESTAQUE</span>' : ""}
+                            </h3>
+                            <p><strong>Idade:</strong> ${pet.idade}</p>
+                            <p><strong>Localização:</strong> ${pet.localizacao}</p>
+                            <p><strong>Descrição:</strong> ${pet.descricao || "Sem descrição"}</p>
+                            <span class="pet-tipo ${tipoClass}">${pet.tipo.toUpperCase()}</span>
+                        </div>
+                        <div class="pet-actions">
+                            <button class="btn-editar" onclick="editarPet(${pet.id})">Editar</button>
+                            <button class="btn-excluir" onclick="excluirPet(${pet.id})">Excluir</button>
+                        </div>
+                    `;
+						container.appendChild(card);
+					});
+				} catch (error) {
+					console.error("Erro ao carregar pets:", error);
+					document.getElementById("petsList").innerHTML =
+						'<div class="sem-pets">Erro ao carregar pets. Verifique se o servidor está rodando.</div>';
+				}
+			}
+
+			async function editarPet(id) {
+				try {
+					const response = await fetch(`${API_URL}/${id}`);
+					const pet = await response.json();
+
+					document.getElementById("petId").value = pet.id;
+					document.getElementById("nome").value = pet.nome;
+					document.getElementById("idade").value = pet.idade;
+					document.getElementById("localizacao").value = pet.localizacao;
+					document.getElementById("tipo").value = pet.tipo;
+					document.getElementById("destaque").value = pet.destaque ? "true" : "false";
+					document.getElementById("descricao").value = pet.descricao || "";
+
+					document.getElementById("modalTitulo").textContent = "Editar Pet";
+					document.getElementById("modal").style.display = "block";
+				} catch (error) {
+					console.error("Erro ao carregar pet:", error);
+					alert("Erro ao carregar dados do pet");
+				}
+			}
+
+			async function excluirPet(id) {
+				if (!confirm("Tem certeza que deseja excluir este pet?")) {
+					return;
+				}
+
+				try {
+					const response = await fetch(`${API_URL}/${id}`, {
+						method: "DELETE",
+					});
+
+					if (response.ok) {
+						alert("Pet excluído com sucesso!");
+						carregarPets();
+					} else {
+						const erro = await response.json();
+						alert("Erro: " + (erro.erro || "Erro ao excluir pet"));
+					}
+				} catch (error) {
+					console.error("Erro:", error);
+					alert("Erro ao conectar com o servidor");
+				}
+			}
+
+			// Tornar funções globais
+			window.abrirModalNovo = abrirModalNovo;
+			window.fecharModal = fecharModal;
+			window.editarPet = editarPet;
+			window.excluirPet = excluirPet;
+		</script>
+	</body>
+</html>
