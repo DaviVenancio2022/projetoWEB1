@@ -63,25 +63,17 @@ Este projeto terá as seguintes funcionalidades:
 
 ---
 
-### 3. Restrições
+### 3. Funcionalidades previstas e não implementadas
 
 Neste trabalho não serão considerados:
 
 1. **Autenticação de usuários** - O sistema não possui tela de login ou níveis de acesso diferenciados. O painel administrativo é acessível diretamente pela URL, pois o foco está nas funcionalidades CRUD.
 
-2. **Banco de dados relacional** - Optou-se por armazenamento em arquivo JSON para simplificar a implementação e evitar a complexidade de configuração de um SGBD.
+2. **Geolocalização** - Não há integração com mapas ou sistema de localização por GPS, apenas campos textuais de localização.
 
-3. **Sistema de adoção completo** - O formulário "Quero Adotar!" redireciona para uma página estática, sem processamento backend do pedido de adoção.
+3. **Notificações** - O sistema não envia e-mails ou mensagens automáticas.
 
-4. **Geolocalização** - Não há integração com mapas ou sistema de localização por GPS, apenas campos textuais de localização.
-
-5. **Notificações** - O sistema não envia e-mails ou mensagens automáticas.
-
-6. **Múltiplas imagens por pet** - Cada pet pode ter apenas uma imagem principal.
-
-7. **Página de detalhes do pet** - Não há página dedicada com informações detalhadas; tudo é exibido nos cards.
-
-8. **Busca e filtros avançados** - Apenas a separação básica por tipo (adoção vs. destaques).
+4. **Busca e filtros avançados** - Apenas a separação básica por tipo (adoção vs. destaques).
 
 ---
 
@@ -103,6 +95,14 @@ Os protótipos das páginas foram elaborados e podem ser encontrados nos seguint
 - Modal de formulário para cadastro/edição (nome, idade, localização, tipo, destaque, descrição, imagem)
 - Grid de cards com todos os pets cadastrados
 - Cada card contém imagem, informações e botões "Editar" e "Excluir"
+
+**Principais Desafios e dificuldades**
+
+Os principais desafios enfrentados durante o desenvolvimento foram:
+
+- Integração entre frontend estático e backend dinâmico.
+- Configuração e conexão com banco MongoDB local.
+- Estruturação correta das rotas CRUD.
 
 **Acessando o prototipo:**
 
